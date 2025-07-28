@@ -12,6 +12,11 @@ from jinja2 import Environment, FileSystemLoader
 
 logger = logging.getLogger(__name__)
 
+TUTORIALS_DESCRIPTION = 'Tutorials to guide you through Bazel specific examples'
+HOW_TO_GUIDES_DESCRIPTION = 'Guides for specific tasks and issues your will encounter'
+EXPLANATIONS_DESCRIPTION = 'Understanding Bazel concepts and features'
+REFERENCE_DESCRIPTION = 'Reference materials, API documentation, and good information for rules authors'
+
 class HugoGenerator:
     """Generator for Hugo site structure and configuration"""
     
@@ -20,7 +25,7 @@ class HugoGenerator:
         self.config = config
         self.template_env = Environment(loader=FileSystemLoader('templates'))
         
-    def generate_config(self, devsite_structure: Dict, output_path: str) -> bool:
+    def generate_config(self, output_path: str) -> bool:
         """
         Generate Hugo configuration file
         
@@ -33,14 +38,9 @@ class HugoGenerator:
         """
         try:
             output_dir = Path(output_path)
-            
-            # Prepare template context
-            context = {
-                'config': self.config['hugo'],
-                'source_repo': self.config['source_repo'],
-                'devsite_structure': devsite_structure
-            }
-            
+                        
+            with open(Path('config.yaml'), 'r') as f:
+                context = yaml.safe_load(f)
             # Render Hugo configuration
             template = self.template_env.get_template('hugo_config.yaml.jinja2')
             config_content = template.render(context)
@@ -128,6 +128,34 @@ class HugoGenerator:
             'weight': 1
         }
         
+        # Create the 4 main categories
+        categories = [
+            {
+                'title': 'Tutorials',
+                'path': '/tutorials/',
+                'description': TUTORIALS_DESCRIPTION,
+                'weight': 10
+            },
+            {
+                'title': 'How-To Guides',
+                'path': '/how-to-guides/',
+                'description': HOW_TO_GUIDES_DESCRIPTION,
+                'weight': 20
+            },
+            {
+                'title': 'Explanations',
+                'path': '/explanations/',
+                'description': EXPLANATIONS_DESCRIPTION,
+                'weight': 30
+            },
+            {
+                'title': 'Reference',
+                'path': '/reference/',
+                'description': REFERENCE_DESCRIPTION,
+                'weight': 40
+            }
+        ]
+        
         # Render main index
         template = self.template_env.get_template('section_index.jinja2')
         index_content = template.render({
@@ -136,14 +164,7 @@ class HugoGenerator:
                 'description': context['description'],
                 'type': 'docs',
                 'weight': 1,
-                'subsections': [
-                    {
-                        'title': section['title'],
-                        'path': f"/{section['name']}/",
-                        'description': f"{section['title']} documentation"
-                    }
-                    for section in devsite_structure['sections']
-                ]
+                'subsections': categories
             }
         })
         
@@ -153,11 +174,94 @@ class HugoGenerator:
         with open(index_file, 'w', encoding='utf-8') as f:
             f.write(index_content)
         
+        # Generate category index files
+        self._generate_category_indices(content_dir, devsite_structure)
+        
         logger.debug(f"Generated main index: {index_file}")
+    
+    def _generate_category_indices(self, content_dir: Path, devsite_structure: Dict) -> None:
+        """Generate _index.md files for the 4 main categories"""
+        categories = {
+            'tutorials': {
+                'title': 'Tutorials',
+                'description': TUTORIALS_DESCRIPTION,
+                'weight': 10,
+                'sections': []
+            },
+            'how-to-guides': {
+                'title': 'How-To Guides', 
+                'description': HOW_TO_GUIDES_DESCRIPTION,
+                'weight': 20,
+                'sections': []
+            },
+            'explanations': {
+                'title': 'Explanations',
+                'description': EXPLANATIONS_DESCRIPTION,
+                'weight': 30,
+                'sections': []
+            },
+            'reference': {
+                'title': 'Reference',
+                'description': REFERENCE_DESCRIPTION,
+                'weight': 40,
+                'sections': []
+            }
+        }
+        
+        # Group sections by category
+        for section in devsite_structure['sections']:
+            section_name = section['name']
+            if section_name in self.config['content_mapping']:
+                mapping = self.config['content_mapping'][section_name]
+                category_type = mapping['type']
+                if category_type in categories:
+                    categories[category_type]['sections'].append(section)
+        
+        # Generate index file for each category
+        for category_type, category_info in categories.items():
+            category_dir = content_dir / category_type
+            category_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Prepare subsections
+            subsections = []
+            for section in category_info['sections']:
+                subsections.append({
+                    'title': section['title'],
+                    'path': f"/{category_type}/{section['name']}/",
+                    'description': f"{section['title']} documentation"
+                })
+            
+            # Render category index
+            template = self.template_env.get_template('section_index.jinja2')
+            index_content = template.render({
+                'section': {
+                    'title': category_info['title'],
+                    'description': category_info['description'],
+                    'type': 'docs',
+                    'weight': category_info['weight'],
+                    'subsections': subsections
+                }
+            })
+            
+            # Write category index file
+            index_file = category_dir / '_index.md'
+            with open(index_file, 'w', encoding='utf-8') as f:
+                f.write(index_content)
+            
+            logger.debug(f"Generated category index: {index_file}")
     
     def _generate_section_index(self, content_dir: Path, section: Dict) -> None:
         """Generate _index.md file for a section"""
-        section_dir = content_dir / section['name']
+        # Determine the category for this section
+        section_name = section['name']
+        category_type = 'docs'  # default
+        
+        if section_name in self.config['content_mapping']:
+            mapping = self.config['content_mapping'][section_name]
+            category_type = mapping['type']
+        
+        # Create section directory under its category
+        section_dir = content_dir / category_type / section['name']
         section_dir.mkdir(parents=True, exist_ok=True)
         
         # Prepare subsections list
@@ -284,8 +388,6 @@ class HugoGenerator:
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ .Title }} | {{ .Site.Title }}</title>
     <meta name="description" content="{{ .Description | default .Site.Params.description }}">
-    
-    {{ $style := resources.Get "scss/main.scss" | resources.ToCSS | resources.Minify }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}">
 </head>
 <body>
@@ -412,127 +514,6 @@ class HugoGenerator:
         with open(toc_file, 'w', encoding='utf-8') as f:
             f.write(toc_content)
     
-    def _generate_main_scss(self, output_dir: Path) -> None:
-        """Generate main SCSS file that imports Bazel styles"""
-        scss_dir = output_dir / 'assets' / 'scss'
-        scss_dir.mkdir(parents=True, exist_ok=True)
-        
-        # Create main.scss that imports the Bazel styles
-        main_scss_content = '''// Main SCSS file for Hugo site
-// Imports Bazel-specific styles
-
-@import "bazel";
-
-// Additional site-wide styles
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-}
-
-.content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-header {
-    background-color: $color-2;
-    color: $color-5;
-    padding: 1rem 0;
-}
-
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.logo {
-    color: $color-5;
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-nav {
-    background-color: $color-3;
-    padding: 0.5rem 0;
-}
-
-nav a {
-    color: $color-5;
-    text-decoration: none;
-    margin: 0 1rem;
-    padding: 0.5rem 0;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-footer {
-    background-color: $color-4;
-    padding: 2rem 0;
-    margin-top: 3rem;
-    text-align: center;
-}
-
-.section-list {
-    list-style: none;
-    padding: 0;
-}
-
-.section-list li {
-    margin: 1rem 0;
-    padding: 1rem;
-    border: 1px solid #e1e4e8;
-    border-radius: 6px;
-}
-
-.section-list a {
-    color: $color-2;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.section-list a:hover {
-    text-decoration: underline;
-}
-
-.section-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 2rem 0;
-}
-
-.section-card {
-    padding: 1.5rem;
-    border: 1px solid #e1e4e8;
-    border-radius: 6px;
-    background: $color-5;
-}
-
-.section-card h3 {
-    margin-top: 0;
-}
-
-.section-card a {
-    color: $color-2;
-    text-decoration: none;
-}
-
-.section-card a:hover {
-    text-decoration: underline;
-}
-'''
-        
-        main_scss_file = scss_dir / 'main.scss'
-        with open(main_scss_file, 'w', encoding='utf-8') as f:
-            f.write(main_scss_content)
-    
     def generate_menu_configuration(self, devsite_structure: Dict) -> Dict:
         """Generate Hugo menu configuration from Devsite structure"""
         menu_config = {
@@ -549,22 +530,3 @@ footer {
             menu_config['main'].append(menu_item)
         
         return menu_config
-    
-    def generate_params_configuration(self, devsite_structure: Dict) -> Dict:
-        """Generate Hugo params configuration for Docsy theme"""
-        params = {
-            'github_repo': f"https://github.com/{self.config['source_repo']['owner']}/{self.config['source_repo']['name']}",
-            'github_branch': self.config['source_repo']['branch'],
-            'github_subdir': self.config['source_repo']['path'],
-            'edit_page': True,
-            'search': {'enabled': True},
-            'navigation': {'depth': 4},
-            'footer': {'enable': True},
-            'taxonomy': {
-                'taxonomyCloud': ['tags', 'categories'],
-                'taxonomyCloudTitle': ['Tag Cloud', 'Categories'],
-                'taxonomyPageHeader': ['tags', 'categories']
-            }
-        }
-        
-        return params

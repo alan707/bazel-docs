@@ -11,7 +11,6 @@ import yaml
 import re
 from utils.devsite_parser import DevsiteParser
 from utils.hugo_generator import HugoGenerator
-from utils.css_converter import CSSConverter
 
 # Configure logging
 logging.basicConfig(
@@ -34,7 +33,6 @@ class DevsiteToHugoConverter:
         self.config = self._load_config()
         self.devsite_parser = DevsiteParser(self.config)
         self.hugo_generator = HugoGenerator(self.config)
-        self.css_converter = CSSConverter(self.config)
 
     def _load_config(self) -> Dict:
         """Load configuration from YAML file"""
@@ -92,15 +90,13 @@ class DevsiteToHugoConverter:
                 devsite_structure, source_path, output_path, dry_run,
                 incremental)
 
-            # Convert CSS and static assets
+            # Convert static assets
             if not dry_run:
                 self._convert_assets(source_path, output_path)
 
             # Generate Hugo configuration
             if not dry_run:
-                self._generate_hugo_config(devsite_structure, output_path)
-                # Skip custom layouts when using Docsy theme
-                # self._generate_layouts(output_path)
+                self._generate_hugo_config(output_path)
                 self._generate_section_indices(devsite_structure, output_path)
 
             logger.info(f"Conversion completed successfully")
@@ -172,9 +168,12 @@ class DevsiteToHugoConverter:
                     conversion_stats['skipped_files'] += 1
                     continue
 
+                # Determine category for this file
+                category_path = self._get_category_path(relative_path)
+                
                 # Convert file
                 if self._convert_single_file(
-                        md_file, output_dir / 'content' / relative_path,
+                        md_file, output_dir / 'content' / category_path,
                         devsite_structure, dry_run):
                     conversion_stats['converted_files'] += 1
                 else:
@@ -185,6 +184,26 @@ class DevsiteToHugoConverter:
                 conversion_stats['error_files'] += 1
 
         return conversion_stats
+
+    def _get_category_path(self, relative_path: Path) -> Path:
+        """Get the category path for a file based on its section"""
+        # Get the top-level directory (section)
+        parts = relative_path.parts
+        if not parts:
+            return relative_path
+        
+        section_name = parts[0]
+        
+        # Look up the category for this section
+        if section_name in self.config['content_mapping']:
+            mapping = self.config['content_mapping'][section_name]
+            category_type = mapping['type']
+            
+            # Return path with category prefix
+            return Path(category_type) / relative_path
+        
+        # Default to original path if no mapping found
+        return relative_path
 
     def _convert_single_file(self, source_file: Path, output_file: Path,
                              devsite_structure: Dict, dry_run: bool) -> bool:
@@ -457,55 +476,134 @@ class DevsiteToHugoConverter:
         return content
 
     def _add_language_identifiers_to_code_blocks(self, content: str) -> str:
-        """Add language identifiers to code blocks without them to prevent KaTeX rendering issues"""
+         """Annotate unlabeled code fences with language identifiers.
 
-        def determine_language(code_content):
-            """Determine appropriate language identifier based on code content"""
-            code_lower = code_content.lower().strip()
 
-            # Check for common patterns
-            if 'load(' in code_content or 'cc_library(' in code_content or 'java_library(' in code_content:
-                return 'starlark'  # Bazel/Starlark (was incorrectly 'python')
-            elif code_content.startswith('/') or 'BUILD' in code_content:
-                return 'text'  # File paths and directory structures
-            elif any(keyword in code_lower
-                     for keyword in ['def ', 'class ', 'import ', 'from ']):
-                return 'python'
-            elif any(keyword in code_lower
-                     for keyword in ['function', 'var ', 'const ', 'let ']):
-                return 'javascript'
-            elif any(keyword in code_lower
-                     for keyword in ['#include', 'int main', 'std::']):
-                return 'cpp'
-            elif any(keyword in code_lower
-                     for keyword in ['public class', 'import java']):
-                return 'java'
-            elif '$' in code_content or 'echo' in code_lower or code_content.startswith(
-                    '#!/'):
-                return 'bash'
-            else:
-                return 'text'  # Default for unknown content
+         Parameters
+         ----------
+         content : str
+             The markdown content possibly containing fenced code blocks.
 
-        # Clean up any text that appears after closing backticks
-        # This ensures nothing ever appears after ```
-        content = re.sub(r'```[^\n\r]*(\n|$)', '```\n', content)
+         Returns
+         -------
+         str
+             Content with unlabeled code blocks annotated with language
+             identifiers.
+         """
+         # Fetch language detection patterns from configuration, or use
+         # sensible defaults.  Keys are language names, values are
+         # sequences of substrings indicative of that language.
+         language_patterns: Dict[str, List[str]] = self.config.get('code_language_patterns')
 
-        # Pattern to match code blocks that start with ``` followed by only whitespace and newline
-        # This ensures we only match code blocks WITHOUT language identifiers
-        pattern = r'```\s*\n(.*?)\n```'
+         def determine_language(code_content: str) -> str:
+             """Return the best language guess for a code snippet.
 
-        def replace_code_block(match):
-            code_content = match.group(1)
-            language = determine_language(code_content)
-            return f'```{language}\n{code_content}\n```'
+             This helper inspects the provided code content for the
+             presence of known substrings.  The first matching language
+             wins.  If no patterns match, ``text`` is returned.
 
-        # Apply the replacement using multiline and dotall flags
-        result = re.sub(pattern,
-                        replace_code_block,
-                        content,
-                        flags=re.MULTILINE | re.DOTALL)
+             Parameters
+             ----------
+             code_content : str
+                 Raw code content extracted from a fenced code block.
 
-        return result
+             Returns
+             -------
+             str
+                 Name of the detected language or ``'text'`` when
+                 uncertain.
+             """
+             if not code_content or not code_content.strip():
+                 return 'text'
+             # Treat directory structures as plain text (these may use
+             # ASCII/Unicode tree characters or start with a leading slash).
+             stripped_content = code_content.strip()
+             if stripped_content.startswith('/') or any(
+                 char in code_content for char in ('└', '├', '│')
+             ):
+                 return 'text'
+             # Check each configured language pattern in the order they
+             # appear.  The first match determines the language.
+             for language, patterns in language_patterns.items():
+                 for pattern in patterns:
+                     if pattern in code_content:
+                         return language
+             return 'text'
+
+         # Split the content into lines, preserving line endings so we
+         # can reconstruct the document accurately.
+         lines: List[str] = content.splitlines(keepends=True)
+         result: List[str] = []
+         in_code_block = False
+         in_unlabeled_block = False
+         code_lines: List[str] = []
+         fence_indent: str = ''
+
+         idx = 0
+         while idx < len(lines):
+             line = lines[idx]
+             stripped = line.strip()
+             # Detect the start of a code fence when not already in a block
+             if not in_code_block:
+                 if stripped.startswith('```'):
+                     after = stripped[3:].strip()
+                     # Capture the indent of the fence (everything before
+                     # the first non-whitespace character).  This indent is
+                     # reused when emitting annotated fences to preserve
+                     # formatting inside lists.
+                     fence_indent = line[: len(line) - len(line.lstrip())]
+                     if after == '':
+                         # Begin an unlabeled fenced code block
+                         in_code_block = True
+                         in_unlabeled_block = True
+                         code_lines = []
+                     else:
+                         # Begin a labeled fenced code block; copy the opening
+                         # fence verbatim
+                         in_code_block = True
+                         in_unlabeled_block = False
+                         result.append(line)
+                 else:
+                     result.append(line)
+             else:
+                 # We're inside a fenced block
+                 if stripped.startswith('```'):
+                     # Encountered a closing fence
+                     if in_unlabeled_block:
+                         # Compute the language and emit annotated fence
+                         code_content = ''.join(code_lines).rstrip('\n\r')
+                         language = determine_language(code_content)
+                         result.append(f'{fence_indent}```{language}\n')
+                         if code_content:
+                             result.append(code_content + '\n')
+                         result.append(f'{fence_indent}```\n')
+                         # Reset state
+                         code_lines = []
+                         in_unlabeled_block = False
+                         in_code_block = False
+                     else:
+                         # Labeled block; preserve closing fence
+                         result.append(line)
+                         in_code_block = False
+                 else:
+                     # Collect lines inside the fenced block
+                     if in_unlabeled_block:
+                         code_lines.append(line)
+                     else:
+                         result.append(line)
+             idx += 1
+
+         # Handle unterminated unlabeled blocks at EOF.  If the file ends
+         # inside an unlabeled code block, annotate it anyway.
+         if in_code_block and in_unlabeled_block:
+             code_content = ''.join(code_lines).rstrip('\n\r')
+             language = determine_language(code_content)
+             result.append(f'{fence_indent}```{language}\n')
+             if code_content:
+                 result.append(code_content + '\n')
+             result.append(f'{fence_indent}```\n')
+
+         return ''.join(result)
 
     def _generate_hugo_markdown(self, frontmatter: Dict, body: str) -> str:
         """Generate Hugo markdown file with frontmatter and body"""
@@ -524,15 +622,9 @@ class DevsiteToHugoConverter:
         return source_file.stat().st_mtime > output_file.stat().st_mtime
 
     def _convert_assets(self, source_path: str, output_path: str) -> None:
-        """Convert CSS and static assets"""
+        """Convert static assets"""
         source_dir = Path(source_path)
         output_dir = Path(output_path)
-
-        # Convert CSS files
-        css_files = list(source_dir.rglob('*.css'))
-        for css_file in css_files:
-            self.css_converter.convert_css_file(css_file,
-                                                output_dir / 'assets' / 'scss')
 
         # Copy static assets (images, etc.)
         static_extensions = ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico']
@@ -544,10 +636,9 @@ class DevsiteToHugoConverter:
                 shutil.copy2(asset_file, output_asset)
                 logger.debug(f"Copied asset: {asset_file} -> {output_asset}")
 
-    def _generate_hugo_config(self, devsite_structure: Dict,
-                              output_path: str) -> None:
+    def _generate_hugo_config(self, output_path: str) -> None:
         """Generate Hugo configuration file"""
-        self.hugo_generator.generate_config(devsite_structure, output_path)
+        self.hugo_generator.generate_config(output_path)
 
     def _generate_layouts(self, output_path: str) -> None:
         """Generate Hugo layout templates"""
