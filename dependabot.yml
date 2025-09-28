@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: gitsubmodule
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "23:00"
+      timezone: "America/Los_Angeles"
+    open-pull-requests-limit: 3
+    rebase-strategy: auto
