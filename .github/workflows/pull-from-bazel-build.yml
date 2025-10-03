@@ -48,6 +48,9 @@ jobs:
         - name: Transform upstream docs to mdx
           run: ./copy-upstream-docs.sh
 
+        - name: Create versioned navigation
+          run: jq -f docs.jq --argfile tabs docs-tabs.json docs-no-versions.json > docs.json
+
         - name: Assert that nothing is different
           if: ${{ github.ref != 'refs/heads/main' }}
           run: |
