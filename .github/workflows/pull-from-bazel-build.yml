@@ -49,7 +49,7 @@ jobs:
           run: ./copy-upstream-docs.sh
 
         - name: Create versioned navigation
-          run: jq -f docs.jq --arg tabs "$(cat docs-tabs.json)" docs-no-versions.json > docs.json
+          run: ./create-docs-json.sh
 
         - name: Assert that nothing is different
           if: ${{ github.ref != 'refs/heads/main' }}
