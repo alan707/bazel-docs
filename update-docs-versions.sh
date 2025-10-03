@@ -2,6 +2,9 @@
 # Update docs-versions.json with a list of Bazel versions that are relevant to document.
 set -euo pipefail
 
+# Don't show documentation for versions that are no longer supported
+OLDEST_LTS_MAJOR=5
+
 echo "Fetching Bazel tags and finding latest patch versions..."
 
 # Get all tags once and store in temporary file
@@ -17,7 +20,7 @@ gh api repos/bazelbuild/bazel/tags --paginate | \
 MINOR_VERSIONS=$(cat "$TAGS_FILE" | \
   sed 's/\.[0-9]*$//' | \
   sort -V | \
-  awk -F. '$1 > 5 || ($1 == 5 && $2 >= 4)' | \
+  awk -F. "\$1 >= $OLDEST_LTS_MAJOR" | \
   uniq)
 
 # Find the highest major version (current major)
@@ -68,8 +71,8 @@ rm "$TAGS_FILE"
 
 # Sort the versions in reverse order (newest first) and add HEAD at the end
 echo "Writing versions to docs-versions.json..."
-sort -Vr "$TEMP_FILE" > temp_sorted.txt
-echo "HEAD" >> temp_sorted.txt
+echo "HEAD" > temp_sorted.txt
+sort -Vr "$TEMP_FILE" >> temp_sorted.txt
 
 # Convert to JSON array
 jq -R -s 'split("\n") | map(select(length > 0))' temp_sorted.txt > docs-versions.json
