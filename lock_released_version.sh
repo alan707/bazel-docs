@@ -40,7 +40,7 @@ git reset --hard "$LATEST_TAG"
 cd ..
 
 # Run the copy-upstream-docs.sh script with the version directory
-echo "Copying docs to directory: $VERSION"
-./copy-upstream-docs.sh "$VERSION"
+echo "Copying docs to directory: $LATEST_TAG"
+./copy-upstream-docs.sh "$LATEST_TAG"
 
-echo "Successfully locked to version $VERSION (tag: $LATEST_TAG) and copied docs to $VERSION/"
+echo "Successfully locked to version $LATEST_TAG and copied docs to $LATEST_TAG/"

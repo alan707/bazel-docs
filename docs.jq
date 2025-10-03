@@ -38,7 +38,7 @@ def add_version_prefix(version; tabs):
     "languages": [
       {
         "language": "en", 
-        "tabs": add_version_prefix("8.4"; $tabs | parse_tabs)
+        "tabs": add_version_prefix("8.4.2"; $tabs | parse_tabs)
       }
     ]
   },
@@ -47,7 +47,7 @@ def add_version_prefix(version; tabs):
     "languages": [
       {
         "language": "en",
-        "tabs": add_version_prefix("8.3"; $tabs | parse_tabs)
+        "tabs": add_version_prefix("8.3.1"; $tabs | parse_tabs)
       }
     ]
   }
