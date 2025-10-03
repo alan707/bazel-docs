@@ -293,23 +293,23 @@
                   {
                     "group": "Why Bazel?",
                     "pages": [
-                      "8.4/about/intro",
-                      "8.4/about/why",
-                      "8.4/about/vision",
-                      "8.4/about/roadmap",
-                      "8.4/about/faq"
+                      "8.4.2/about/intro",
+                      "8.4.2/about/why",
+                      "8.4.2/about/vision",
+                      "8.4.2/about/roadmap",
+                      "8.4.2/about/faq"
                     ]
                   },
                   {
                     "group": "Build system basics",
                     "pages": [
-                      "8.4/basics",
-                      "8.4/basics/build-systems",
-                      "8.4/basics/task-based-builds",
-                      "8.4/basics/artifact-based-builds",
-                      "8.4/basics/distributed-builds",
-                      "8.4/basics/dependencies",
-                      "8.4/basics/hermeticity"
+                      "8.4.2/basics",
+                      "8.4.2/basics/build-systems",
+                      "8.4.2/basics/task-based-builds",
+                      "8.4.2/basics/artifact-based-builds",
+                      "8.4.2/basics/distributed-builds",
+                      "8.4.2/basics/dependencies",
+                      "8.4.2/basics/hermeticity"
                     ]
                   }
                 ]
@@ -320,37 +320,37 @@
                   {
                     "group": "Install",
                     "pages": [
-                      "8.4/install",
-                      "8.4/install/bazelisk",
-                      "8.4/install/os-x",
-                      "8.4/install/windows",
-                      "8.4/install/ubuntu",
-                      "8.4/install/suse",
-                      "8.4/install/docker-container",
-                      "8.4/install/compile-source",
-                      "8.4/install/completion",
-                      "8.4/install/ide"
+                      "8.4.2/install",
+                      "8.4.2/install/bazelisk",
+                      "8.4.2/install/os-x",
+                      "8.4.2/install/windows",
+                      "8.4.2/install/ubuntu",
+                      "8.4.2/install/suse",
+                      "8.4.2/install/docker-container",
+                      "8.4.2/install/compile-source",
+                      "8.4.2/install/completion",
+                      "8.4.2/install/ide"
                     ]
                   },
                   {
                     "group": "First build tutorials",
                     "pages": [
-                      "8.4/start/cpp",
-                      "8.4/start/java",
-                      "8.4/start/android-app",
-                      "8.4/start/ios-app"
+                      "8.4.2/start/cpp",
+                      "8.4.2/start/java",
+                      "8.4.2/start/android-app",
+                      "8.4.2/start/ios-app"
                     ]
                   },
                   {
                     "group": "Concepts",
                     "pages": [
-                      "8.4/concepts/build-ref",
-                      "8.4/concepts/labels",
-                      "8.4/concepts/build-files",
-                      "8.4/concepts/dependencies",
-                      "8.4/concepts/visibility",
-                      "8.4/concepts/platforms",
-                      "8.4/concepts/hermeticity"
+                      "8.4.2/concepts/build-ref",
+                      "8.4.2/concepts/labels",
+                      "8.4.2/concepts/build-files",
+                      "8.4.2/concepts/dependencies",
+                      "8.4.2/concepts/visibility",
+                      "8.4.2/concepts/platforms",
+                      "8.4.2/concepts/hermeticity"
                     ]
                   }
                 ]
@@ -361,72 +361,72 @@
                   {
                     "group": "Releases",
                     "pages": [
-                      "8.4/release",
-                      "8.4/release/rolling",
-                      "8.4/release/backward-compatibility",
-                      "8.4/release/rule-compatibility"
+                      "8.4.2/release",
+                      "8.4.2/release/rolling",
+                      "8.4.2/release/backward-compatibility",
+                      "8.4.2/release/rule-compatibility"
                     ]
                   },
                   {
                     "group": "Basics",
                     "pages": [
-                      "8.4/build/style-guide",
-                      "8.4/build/share-variables",
-                      "8.4/community/recommended-rules",
-                      "8.4/run/build"
+                      "8.4.2/build/style-guide",
+                      "8.4.2/build/share-variables",
+                      "8.4.2/community/recommended-rules",
+                      "8.4.2/run/build"
                     ]
                   },
                   {
                     "group": "Advanced",
                     "pages": [
-                      "8.4/configure/attributes",
-                      "8.4/configure/integrate-cpp",
-                      "8.4/configure/coverage",
-                      "8.4/configure/best-practices",
-                      "8.4/configure/windows",
-                      "8.4/advanced/performance/build-performance-metrics",
-                      "8.4/advanced/performance/build-performance-breakdown",
-                      "8.4/advanced/performance/json-trace-profile",
-                      "8.4/advanced/performance/memory",
-                      "8.4/advanced/performance/iteration-speed"
+                      "8.4.2/configure/attributes",
+                      "8.4.2/configure/integrate-cpp",
+                      "8.4.2/configure/coverage",
+                      "8.4.2/configure/best-practices",
+                      "8.4.2/configure/windows",
+                      "8.4.2/advanced/performance/build-performance-metrics",
+                      "8.4.2/advanced/performance/build-performance-breakdown",
+                      "8.4.2/advanced/performance/json-trace-profile",
+                      "8.4.2/advanced/performance/memory",
+                      "8.4.2/advanced/performance/iteration-speed"
                     ]
                   },
                   {
                     "group": "Remote Execution",
                     "pages": [
-                      "8.4/remote/rbe",
-                      "8.4/remote/rules",
-                      "8.4/remote/ci",
-                      "8.4/remote/dynamic",
-                      "8.4/remote/caching",
-                      "8.4/remote/sandbox",
-                      "8.4/remote/workspace",
-                      "8.4/remote/cache-remote",
-                      "8.4/remote/cache-local",
-                      "8.4/remote/output-directories",
-                      "8.4/remote/persistent",
-                      "8.4/remote/multiplex",
-                      "8.4/remote/creating",
-                      "8.4/remote/bep",
-                      "8.4/remote/bep-examples",
-                      "8.4/remote/bep-glossary"
+                      "8.4.2/remote/rbe",
+                      "8.4.2/remote/rules",
+                      "8.4.2/remote/ci",
+                      "8.4.2/remote/dynamic",
+                      "8.4.2/remote/caching",
+                      "8.4.2/remote/sandbox",
+                      "8.4.2/remote/workspace",
+                      "8.4.2/remote/cache-remote",
+                      "8.4.2/remote/cache-local",
+                      "8.4.2/remote/output-directories",
+                      "8.4.2/remote/persistent",
+                      "8.4.2/remote/multiplex",
+                      "8.4.2/remote/creating",
+                      "8.4.2/remote/bep",
+                      "8.4.2/remote/bep-examples",
+                      "8.4.2/remote/bep-glossary"
                     ]
                   },
                   {
                     "group": "Tutorials",
                     "pages": [
-                      "8.4/tutorials/cpp-use-cases",
-                      "8.4/tutorials/ccp-toolchain-config",
-                      "8.4/tutorials/cpp-dependency",
-                      "8.4/tutorials/cpp-labels"
+                      "8.4.2/tutorials/cpp-use-cases",
+                      "8.4.2/tutorials/ccp-toolchain-config",
+                      "8.4.2/tutorials/cpp-dependency",
+                      "8.4.2/tutorials/cpp-labels"
                     ]
                   },
                   {
                     "group": "Migrate",
                     "pages": [
-                      "8.4/migrate",
-                      "8.4/migrate/maven",
-                      "8.4/migrate/xcode"
+                      "8.4.2/migrate",
+                      "8.4.2/migrate/maven",
+                      "8.4.2/migrate/xcode"
                     ]
                   }
                 ]
@@ -437,34 +437,34 @@
                   {
                     "group": "Build encyclopedia",
                     "pages": [
-                      "8.4/reference/be/overview",
-                      "8.4/reference/be/common-definitions",
-                      "8.4/reference/be/make-variables",
-                      "8.4/reference/be/functions"
+                      "8.4.2/reference/be/overview",
+                      "8.4.2/reference/be/common-definitions",
+                      "8.4.2/reference/be/make-variables",
+                      "8.4.2/reference/be/functions"
                     ]
                   },
                   {
                     "group": "Command line reference",
                     "pages": [
-                      "8.4/reference/command-line-reference"
+                      "8.4.2/reference/command-line-reference"
                     ]
                   },
                   {
                     "group": "Query Language",
                     "pages": [
-                      "8.4/query/language"
+                      "8.4.2/query/language"
                     ]
                   },
                   {
                     "group": "Glossary",
                     "pages": [
-                      "8.4/reference/glossary"
+                      "8.4.2/reference/glossary"
                     ]
                   },
                   {
                     "group": "Flag cheatsheet",
                     "pages": [
-                      "8.4/reference/flag-cheatsheet"
+                      "8.4.2/reference/flag-cheatsheet"
                     ]
                   }
                 ]
@@ -475,35 +475,35 @@
                   {
                     "group": "Concepts",
                     "pages": [
-                      "8.4/extending/concepts"
+                      "8.4.2/extending/concepts"
                     ]
                   },
                   {
                     "group": "Writing rules",
                     "pages": [
-                      "8.4/rules/rules-tutorial",
-                      "8.4/rules/macro-tutorial",
-                      "8.4/rules/legacy-macro-tutorial",
-                      "8.4/rules/verbs-tutorial",
-                      "8.4/rules/language",
-                      "8.4/rules/bzl-style",
-                      "8.4/rules/challenges",
-                      "8.4/rules/windows"
+                      "8.4.2/rules/rules-tutorial",
+                      "8.4.2/rules/macro-tutorial",
+                      "8.4.2/rules/legacy-macro-tutorial",
+                      "8.4.2/rules/verbs-tutorial",
+                      "8.4.2/rules/language",
+                      "8.4.2/rules/bzl-style",
+                      "8.4.2/rules/challenges",
+                      "8.4.2/rules/windows"
                     ]
                   },
                   {
                     "group": "Distributing rules",
                     "pages": [
-                      "8.4/rules/testing",
-                      "8.4/rules/performance",
-                      "8.4/rules/deploying"
+                      "8.4.2/rules/testing",
+                      "8.4.2/rules/performance",
+                      "8.4.2/rules/deploying"
                     ]
                   },
                   {
                     "group": "APIs",
                     "pages": [
-                      "8.4/rules/lib/overview",
-                      "8.4/rules/lib/globals"
+                      "8.4.2/rules/lib/overview",
+                      "8.4.2/rules/lib/globals"
                     ]
                   }
                 ]
@@ -514,36 +514,36 @@
                   {
                     "group": "Contributing",
                     "pages": [
-                      "8.4/contribute",
-                      "8.4/contribute/policy",
-                      "8.4/contribute/patch-acceptance",
-                      "8.4/contribute/maintainers-guide",
-                      "8.4/contribute/codebase",
-                      "8.4/contribute/search",
-                      "8.4/contribute/statemachine-guide",
-                      "8.4/contribute/docs",
-                      "8.4/contribute/docs-style-guide",
-                      "8.4/contribute/design-documents",
-                      "8.4/contribute/release-notes"
+                      "8.4.2/contribute",
+                      "8.4.2/contribute/policy",
+                      "8.4.2/contribute/patch-acceptance",
+                      "8.4.2/contribute/maintainers-guide",
+                      "8.4.2/contribute/codebase",
+                      "8.4.2/contribute/search",
+                      "8.4.2/contribute/statemachine-guide",
+                      "8.4.2/contribute/docs",
+                      "8.4.2/contribute/docs-style-guide",
+                      "8.4.2/contribute/design-documents",
+                      "8.4.2/contribute/release-notes"
                     ]
                   },
                   {
                     "group": "Programs",
                     "pages": [
-                      "8.4/community/update",
-                      "8.4/community/sig",
-                      "8.4/community/experts",
-                      "8.4/community/partners",
-                      "8.4/community/users",
-                      "8.4/community/recommended-rules",
-                      "8.4/community/remote-execution-services"
+                      "8.4.2/community/update",
+                      "8.4.2/community/sig",
+                      "8.4.2/community/experts",
+                      "8.4.2/community/partners",
+                      "8.4.2/community/users",
+                      "8.4.2/community/recommended-rules",
+                      "8.4.2/community/remote-execution-services"
                     ]
                   },
                   {
                     "group": "Getting help",
                     "pages": [
-                      "8.4/help",
-                      "8.4/contribute/policy"
+                      "8.4.2/help",
+                      "8.4.2/contribute/policy"
                     ]
                   }
                 ]
@@ -564,23 +564,23 @@
                   {
                     "group": "Why Bazel?",
                     "pages": [
-                      "8.3/about/intro",
-                      "8.3/about/why",
-                      "8.3/about/vision",
-                      "8.3/about/roadmap",
-                      "8.3/about/faq"
+                      "8.3.1/about/intro",
+                      "8.3.1/about/why",
+                      "8.3.1/about/vision",
+                      "8.3.1/about/roadmap",
+                      "8.3.1/about/faq"
                     ]
                   },
                   {
                     "group": "Build system basics",
                     "pages": [
-                      "8.3/basics",
-                      "8.3/basics/build-systems",
-                      "8.3/basics/task-based-builds",
-                      "8.3/basics/artifact-based-builds",
-                      "8.3/basics/distributed-builds",
-                      "8.3/basics/dependencies",
-                      "8.3/basics/hermeticity"
+                      "8.3.1/basics",
+                      "8.3.1/basics/build-systems",
+                      "8.3.1/basics/task-based-builds",
+                      "8.3.1/basics/artifact-based-builds",
+                      "8.3.1/basics/distributed-builds",
+                      "8.3.1/basics/dependencies",
+                      "8.3.1/basics/hermeticity"
                     ]
                   }
                 ]
@@ -591,37 +591,37 @@
                   {
                     "group": "Install",
                     "pages": [
-                      "8.3/install",
-                      "8.3/install/bazelisk",
-                      "8.3/install/os-x",
-                      "8.3/install/windows",
-                      "8.3/install/ubuntu",
-                      "8.3/install/suse",
-                      "8.3/install/docker-container",
-                      "8.3/install/compile-source",
-                      "8.3/install/completion",
-                      "8.3/install/ide"
+                      "8.3.1/install",
+                      "8.3.1/install/bazelisk",
+                      "8.3.1/install/os-x",
+                      "8.3.1/install/windows",
+                      "8.3.1/install/ubuntu",
+                      "8.3.1/install/suse",
+                      "8.3.1/install/docker-container",
+                      "8.3.1/install/compile-source",
+                      "8.3.1/install/completion",
+                      "8.3.1/install/ide"
                     ]
                   },
                   {
                     "group": "First build tutorials",
                     "pages": [
-                      "8.3/start/cpp",
-                      "8.3/start/java",
-                      "8.3/start/android-app",
-                      "8.3/start/ios-app"
+                      "8.3.1/start/cpp",
+                      "8.3.1/start/java",
+                      "8.3.1/start/android-app",
+                      "8.3.1/start/ios-app"
                     ]
                   },
                   {
                     "group": "Concepts",
                     "pages": [
-                      "8.3/concepts/build-ref",
-                      "8.3/concepts/labels",
-                      "8.3/concepts/build-files",
-                      "8.3/concepts/dependencies",
-                      "8.3/concepts/visibility",
-                      "8.3/concepts/platforms",
-                      "8.3/concepts/hermeticity"
+                      "8.3.1/concepts/build-ref",
+                      "8.3.1/concepts/labels",
+                      "8.3.1/concepts/build-files",
+                      "8.3.1/concepts/dependencies",
+                      "8.3.1/concepts/visibility",
+                      "8.3.1/concepts/platforms",
+                      "8.3.1/concepts/hermeticity"
                     ]
                   }
                 ]
@@ -632,72 +632,72 @@
                   {
                     "group": "Releases",
                     "pages": [
-                      "8.3/release",
-                      "8.3/release/rolling",
-                      "8.3/release/backward-compatibility",
-                      "8.3/release/rule-compatibility"
+                      "8.3.1/release",
+                      "8.3.1/release/rolling",
+                      "8.3.1/release/backward-compatibility",
+                      "8.3.1/release/rule-compatibility"
                     ]
                   },
                   {
                     "group": "Basics",
                     "pages": [
-                      "8.3/build/style-guide",
-                      "8.3/build/share-variables",
-                      "8.3/community/recommended-rules",
-                      "8.3/run/build"
+                      "8.3.1/build/style-guide",
+                      "8.3.1/build/share-variables",
+                      "8.3.1/community/recommended-rules",
+                      "8.3.1/run/build"
                     ]
                   },
                   {
                     "group": "Advanced",
                     "pages": [
-                      "8.3/configure/attributes",
-                      "8.3/configure/integrate-cpp",
-                      "8.3/configure/coverage",
-                      "8.3/configure/best-practices",
-                      "8.3/configure/windows",
-                      "8.3/advanced/performance/build-performance-metrics",
-                      "8.3/advanced/performance/build-performance-breakdown",
-                      "8.3/advanced/performance/json-trace-profile",
-                      "8.3/advanced/performance/memory",
-                      "8.3/advanced/performance/iteration-speed"
+                      "8.3.1/configure/attributes",
+                      "8.3.1/configure/integrate-cpp",
+                      "8.3.1/configure/coverage",
+                      "8.3.1/configure/best-practices",
+                      "8.3.1/configure/windows",
+                      "8.3.1/advanced/performance/build-performance-metrics",
+                      "8.3.1/advanced/performance/build-performance-breakdown",
+                      "8.3.1/advanced/performance/json-trace-profile",
+                      "8.3.1/advanced/performance/memory",
+                      "8.3.1/advanced/performance/iteration-speed"
                     ]
                   },
                   {
                     "group": "Remote Execution",
                     "pages": [
-                      "8.3/remote/rbe",
-                      "8.3/remote/rules",
-                      "8.3/remote/ci",
-                      "8.3/remote/dynamic",
-                      "8.3/remote/caching",
-                      "8.3/remote/sandbox",
-                      "8.3/remote/workspace",
-                      "8.3/remote/cache-remote",
-                      "8.3/remote/cache-local",
-                      "8.3/remote/output-directories",
-                      "8.3/remote/persistent",
-                      "8.3/remote/multiplex",
-                      "8.3/remote/creating",
-                      "8.3/remote/bep",
-                      "8.3/remote/bep-examples",
-                      "8.3/remote/bep-glossary"
+                      "8.3.1/remote/rbe",
+                      "8.3.1/remote/rules",
+                      "8.3.1/remote/ci",
+                      "8.3.1/remote/dynamic",
+                      "8.3.1/remote/caching",
+                      "8.3.1/remote/sandbox",
+                      "8.3.1/remote/workspace",
+                      "8.3.1/remote/cache-remote",
+                      "8.3.1/remote/cache-local",
+                      "8.3.1/remote/output-directories",
+                      "8.3.1/remote/persistent",
+                      "8.3.1/remote/multiplex",
+                      "8.3.1/remote/creating",
+                      "8.3.1/remote/bep",
+                      "8.3.1/remote/bep-examples",
+                      "8.3.1/remote/bep-glossary"
                     ]
                   },
                   {
                     "group": "Tutorials",
                     "pages": [
-                      "8.3/tutorials/cpp-use-cases",
-                      "8.3/tutorials/ccp-toolchain-config",
-                      "8.3/tutorials/cpp-dependency",
-                      "8.3/tutorials/cpp-labels"
+                      "8.3.1/tutorials/cpp-use-cases",
+                      "8.3.1/tutorials/ccp-toolchain-config",
+                      "8.3.1/tutorials/cpp-dependency",
+                      "8.3.1/tutorials/cpp-labels"
                     ]
                   },
                   {
                     "group": "Migrate",
                     "pages": [
-                      "8.3/migrate",
-                      "8.3/migrate/maven",
-                      "8.3/migrate/xcode"
+                      "8.3.1/migrate",
+                      "8.3.1/migrate/maven",
+                      "8.3.1/migrate/xcode"
                     ]
                   }
                 ]
@@ -708,34 +708,34 @@
                   {
                     "group": "Build encyclopedia",
                     "pages": [
-                      "8.3/reference/be/overview",
-                      "8.3/reference/be/common-definitions",
-                      "8.3/reference/be/make-variables",
-                      "8.3/reference/be/functions"
+                      "8.3.1/reference/be/overview",
+                      "8.3.1/reference/be/common-definitions",
+                      "8.3.1/reference/be/make-variables",
+                      "8.3.1/reference/be/functions"
                     ]
                   },
                   {
                     "group": "Command line reference",
                     "pages": [
-                      "8.3/reference/command-line-reference"
+                      "8.3.1/reference/command-line-reference"
                     ]
                   },
                   {
                     "group": "Query Language",
                     "pages": [
-                      "8.3/query/language"
+                      "8.3.1/query/language"
                     ]
                   },
                   {
                     "group": "Glossary",
                     "pages": [
-                      "8.3/reference/glossary"
+                      "8.3.1/reference/glossary"
                     ]
                   },
                   {
                     "group": "Flag cheatsheet",
                     "pages": [
-                      "8.3/reference/flag-cheatsheet"
+                      "8.3.1/reference/flag-cheatsheet"
                     ]
                   }
                 ]
@@ -746,35 +746,35 @@
                   {
                     "group": "Concepts",
                     "pages": [
-                      "8.3/extending/concepts"
+                      "8.3.1/extending/concepts"
                     ]
                   },
                   {
                     "group": "Writing rules",
                     "pages": [
-                      "8.3/rules/rules-tutorial",
-                      "8.3/rules/macro-tutorial",
-                      "8.3/rules/legacy-macro-tutorial",
-                      "8.3/rules/verbs-tutorial",
-                      "8.3/rules/language",
-                      "8.3/rules/bzl-style",
-                      "8.3/rules/challenges",
-                      "8.3/rules/windows"
+                      "8.3.1/rules/rules-tutorial",
+                      "8.3.1/rules/macro-tutorial",
+                      "8.3.1/rules/legacy-macro-tutorial",
+                      "8.3.1/rules/verbs-tutorial",
+                      "8.3.1/rules/language",
+                      "8.3.1/rules/bzl-style",
+                      "8.3.1/rules/challenges",
+                      "8.3.1/rules/windows"
                     ]
                   },
                   {
                     "group": "Distributing rules",
                     "pages": [
-                      "8.3/rules/testing",
-                      "8.3/rules/performance",
-                      "8.3/rules/deploying"
+                      "8.3.1/rules/testing",
+                      "8.3.1/rules/performance",
+                      "8.3.1/rules/deploying"
                     ]
                   },
                   {
                     "group": "APIs",
                     "pages": [
-                      "8.3/rules/lib/overview",
-                      "8.3/rules/lib/globals"
+                      "8.3.1/rules/lib/overview",
+                      "8.3.1/rules/lib/globals"
                     ]
                   }
                 ]
@@ -785,36 +785,36 @@
                   {
                     "group": "Contributing",
                     "pages": [
-                      "8.3/contribute",
-                      "8.3/contribute/policy",
-                      "8.3/contribute/patch-acceptance",
-                      "8.3/contribute/maintainers-guide",
-                      "8.3/contribute/codebase",
-                      "8.3/contribute/search",
-                      "8.3/contribute/statemachine-guide",
-                      "8.3/contribute/docs",
-                      "8.3/contribute/docs-style-guide",
-                      "8.3/contribute/design-documents",
-                      "8.3/contribute/release-notes"
+                      "8.3.1/contribute",
+                      "8.3.1/contribute/policy",
+                      "8.3.1/contribute/patch-acceptance",
+                      "8.3.1/contribute/maintainers-guide",
+                      "8.3.1/contribute/codebase",
+                      "8.3.1/contribute/search",
+                      "8.3.1/contribute/statemachine-guide",
+                      "8.3.1/contribute/docs",
+                      "8.3.1/contribute/docs-style-guide",
+                      "8.3.1/contribute/design-documents",
+                      "8.3.1/contribute/release-notes"
                     ]
                   },
                   {
                     "group": "Programs",
                     "pages": [
-                      "8.3/community/update",
-                      "8.3/community/sig",
-                      "8.3/community/experts",
-                      "8.3/community/partners",
-                      "8.3/community/users",
-                      "8.3/community/recommended-rules",
-                      "8.3/community/remote-execution-services"
+                      "8.3.1/community/update",
+                      "8.3.1/community/sig",
+                      "8.3.1/community/experts",
+                      "8.3.1/community/partners",
+                      "8.3.1/community/users",
+                      "8.3.1/community/recommended-rules",
+                      "8.3.1/community/remote-execution-services"
                     ]
                   },
                   {
                     "group": "Getting help",
                     "pages": [
-                      "8.3/help",
-                      "8.3/contribute/policy"
+                      "8.3.1/help",
+                      "8.3.1/contribute/policy"
                     ]
                   }
                 ]
