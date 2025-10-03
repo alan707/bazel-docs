@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# Update docs-versions.txt with the latest patch version for each minor version
-# This script fetches all Bazel tags and finds the most recent patch for each minor version
-
+# Update docs-versions.json with a list of Bazel versions that are relevant to document.
 set -euo pipefail
 
 echo "Fetching Bazel tags and finding latest patch versions..."
@@ -14,11 +12,34 @@ gh api repos/bazelbuild/bazel/tags --paginate | \
   grep -v "rc" > "$TAGS_FILE"
 
 # Extract unique minor versions (skip versions earlier than 5.4)
+# For current major version, include all minor versions
+# For older major versions, only include the latest minor
 MINOR_VERSIONS=$(cat "$TAGS_FILE" | \
   sed 's/\.[0-9]*$//' | \
   sort -V | \
   awk -F. '$1 > 5 || ($1 == 5 && $2 >= 4)' | \
   uniq)
+
+# Find the highest major version (current major)
+CURRENT_MAJOR=$(echo "$MINOR_VERSIONS" | cut -d. -f1 | sort -n | tail -1)
+
+# Filter to only include latest minor for each major (except current major)
+FILTERED_MINOR_VERSIONS=""
+for minor in $MINOR_VERSIONS; do
+  MAJOR=$(echo "$minor" | cut -d. -f1)
+  if [ "$MAJOR" = "$CURRENT_MAJOR" ]; then
+    # Include all minor versions for current major
+    FILTERED_MINOR_VERSIONS="$FILTERED_MINOR_VERSIONS $minor"
+  else
+    # For older majors, only include if it's the latest minor for that major
+    LATEST_FOR_MAJOR=$(echo "$MINOR_VERSIONS" | grep "^$MAJOR\." | sort -V | tail -1)
+    if [ "$minor" = "$LATEST_FOR_MAJOR" ]; then
+      FILTERED_MINOR_VERSIONS="$FILTERED_MINOR_VERSIONS $minor"
+    fi
+  fi
+done
+
+MINOR_VERSIONS="$FILTERED_MINOR_VERSIONS"
 
 echo "Found minor versions: $MINOR_VERSIONS"
 
