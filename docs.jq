@@ -1,11 +1,14 @@
 # JQ Filter to fill in the docs.json file with versions and languages.
 # Run with:
-#   jq -f docs.jq --argfile tabs docs-tabs.json docs-no-versions.json > docs.json
+#   jq -f docs.jq --arg tabs "$(cat docs-tabs.json)" docs-no-versions.json > docs.json
 #
 # Reads the docs.json file to find the navigation.versions property.
 # Replaces it with versions for HEAD, 8.4, 8.3
 # For HEAD version, uses tabs.json content as-is
 # For other versions, prepends the version to each page path
+
+# Parse the tabs JSON string
+def parse_tabs: fromjson;
 
 # Function to add version prefix to all page paths in tabs
 def add_version_prefix(version; tabs):
@@ -26,7 +29,7 @@ def add_version_prefix(version; tabs):
     "languages": [
       {
         "language": "en",
-        "tabs": add_version_prefix("HEAD"; $tabs)
+        "tabs": add_version_prefix("HEAD"; $tabs | parse_tabs)
       }
     ]
   },
@@ -35,7 +38,7 @@ def add_version_prefix(version; tabs):
     "languages": [
       {
         "language": "en", 
-        "tabs": add_version_prefix("8.4"; $tabs)
+        "tabs": add_version_prefix("8.4"; $tabs | parse_tabs)
       }
     ]
   },
@@ -44,7 +47,7 @@ def add_version_prefix(version; tabs):
     "languages": [
       {
         "language": "en",
-        "tabs": add_version_prefix("8.3"; $tabs)
+        "tabs": add_version_prefix("8.3"; $tabs | parse_tabs)
       }
     ]
   }
