@@ -1,46 +1,41 @@
 #!/usr/bin/env bash
-# Create or update versioned subfolder for docs of a specific Bazel release.
+# Create or update versioned subfolders for docs of all Bazel releases.
 #
 # This script does the following:
-# takes a version as the first command-line argument, such as "8.4"
-# Locates the most recent tag on the bazelbuild/bazel repo that is prefixed with the version, such as "8.4.1"
-# Resets the upstream/ submodule to point to that tag
-# Runs the ./copy-upstream-docs.sh script to copy the docs to a new directory named after the argument, for example /8.4
+# Reads docs-versions.json to get all available versions
+# Checks which version folders are missing
+# For each missing version, resets the upstream/ submodule to that tag
+# Runs the ./copy-upstream-docs.sh script to copy the docs to the version directory
 
 set -euo pipefail
 
-# Check if version argument is provided
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <version>"
-    echo "Example: $0 8.4"
-    exit 1
-fi
+echo "Checking for missing version folders..."
 
-VERSION="$1"
-echo "Locking to version: $VERSION"
+# Get all versions from docs-versions.json, excluding HEAD
+VERSIONS=$(jq -r '.[] | select(. != "HEAD")' docs-versions.json)
 
-# Use GitHub CLI to find the latest tag (with pagination)
-echo "Looking for most recent tag starting with $VERSION..."
-LATEST_TAG=$(gh api repos/bazelbuild/bazel/tags --paginate | jq -rs '.[] | .[] | .name' | grep -E "^$VERSION\." | grep -v "rc" | sort -V | tail -1)
+# Check which folders are missing and create them
+for VERSION in $VERSIONS; do
+    if [ ! -d "$VERSION" ]; then
+        echo "Creating missing folder for version: $VERSION"
+        
+        # Change to upstream directory and reset to the specific tag
+        cd upstream
+        echo "Resetting submodule to tag: $VERSION"
+        git fetch origin "refs/tags/$VERSION:refs/tags/$VERSION"
+        git reset --hard "$VERSION"
+        
+        # Go back to the root directory
+        cd ..
+        
+        # Run the copy-upstream-docs.sh script with the version directory
+        echo "Copying docs to directory: $VERSION"
+        ./copy-upstream-docs.sh "$VERSION"
+        
+        echo "Successfully created docs for version $VERSION"
+    else
+        echo "Folder $VERSION already exists, skipping"
+    fi
+done
 
-if [ -z "$LATEST_TAG" ]; then
-    echo "Error: No tag found starting with $VERSION"
-    exit 1
-fi
-
-echo "Found latest tag: $LATEST_TAG"
-
-# Change to upstream directory and reset to the specific tag
-cd upstream
-echo "Resetting submodule to tag: $LATEST_TAG"
-git fetch origin "refs/tags/$LATEST_TAG:refs/tags/$LATEST_TAG"
-git reset --hard "$LATEST_TAG"
-
-# Go back to the root directory
-cd ..
-
-# Run the copy-upstream-docs.sh script with the version directory
-echo "Copying docs to directory: $LATEST_TAG"
-./copy-upstream-docs.sh "$LATEST_TAG"
-
-echo "Successfully locked to version $LATEST_TAG and copied docs to $LATEST_TAG/"
+echo "All version folders are now up to date!"
