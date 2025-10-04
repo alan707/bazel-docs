@@ -1,0 +1,840 @@
+---
+title: 'string'
+---
+
+# string
+
+{% dynamic setvar source_file "src/main/java/net/starlark/java/eval/StringModule.java" %}
+{% include "\_buttons.html" %}
+A language built-in type to support strings. Examples of string literals:  
+
+``` python
+a = 'abc\ndef'
+b = "ab'cd"
+c = """multiline string"""
+
+# Strings support slicing (negative index starts from the end):
+x = "hello"[2:4]  # "ll"
+y = "hello"[1:-1]  # "ell"
+z = "hello"[:4]  # "hell"
+# Slice steps can be used, too:
+s = "hello"[::2] # "hlo"
+t = "hello"[3:0:-1] # "lle"
+```
+
+Strings are not directly iterable, use the `.elems()` method to iterate over their characters. Examples:  
+
+``` python
+"bc" in "abcd"   # evaluates to True
+x = [c for c in "abc".elems()]  # x == ["a", "b", "c"]
+```
+
+Implicit concatenation of strings is not allowed; use the `+` operator instead. Comparison operators perform a lexicographical comparison; use `==` to test for equality.
+
+## Members
+
+- [capitalize](#capitalize)
+- [count](#count)
+- [elems](#elems)
+- [endswith](#endswith)
+- [find](#find)
+- [format](#format)
+- [index](#index)
+- [isalnum](#isalnum)
+- [isalpha](#isalpha)
+- [isdigit](#isdigit)
+- [islower](#islower)
+- [isspace](#isspace)
+- [istitle](#istitle)
+- [isupper](#isupper)
+- [join](#join)
+- [lower](#lower)
+- [lstrip](#lstrip)
+- [partition](#partition)
+- [removeprefix](#removeprefix)
+- [removesuffix](#removesuffix)
+- [replace](#replace)
+- [rfind](#rfind)
+- [rindex](#rindex)
+- [rpartition](#rpartition)
+- [rsplit](#rsplit)
+- [rstrip](#rstrip)
+- [split](#split)
+- [splitlines](#splitlines)
+- [startswith](#startswith)
+- [strip](#strip)
+- [title](#title)
+- [upper](#upper)
+
+## capitalize
+
+``` rule-signature
+string string.capitalize()
+```
+
+Returns a copy of the string with its first character (if any) capitalized and the rest lowercased. This method does not support non-ascii characters.
+
+## count
+
+``` rule-signature
+int string.count(sub, start=0, end=None)
+```
+
+Returns the number of (non-overlapping) occurrences of substring `sub` in string, optionally restricting to `[start:end]`, `start` being inclusive and `end` being exclusive.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="count.sub"><code>sub</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The substring to count.</td>
+</tr>
+<tr>
+<td id="count.start"><code>start</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>0</code><br />
+Restrict to search from this position.</td>
+</tr>
+<tr>
+<td id="count.end"><code>end</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>None</code><br />
+optional position before which to restrict to search.</td>
+</tr>
+</tbody>
+</table>
+
+## elems
+
+``` rule-signature
+sequence string.elems()
+```
+
+Returns an iterable value containing successive 1-element substrings of the string. Equivalent to `[s[i] for i in range(len(s))]`, except that the returned value might not be a list.
+
+## endswith
+
+``` rule-signature
+bool string.endswith(sub, start=0, end=None)
+```
+
+Returns True if the string ends with `sub`, otherwise False, optionally restricting to `[start:end]`, `start` being inclusive and `end` being exclusive.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="endswith.sub"><code>sub</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>; or <a href="../core/tuple.html" class="anchor">tuple</a> of <a href="../core/string.html" class="anchor">string</a>s;
+required<br />
+The suffix (or tuple of alternative suffixes) to match.</td>
+</tr>
+<tr>
+<td id="endswith.start"><code>start</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>0</code><br />
+Test beginning at this position.</td>
+</tr>
+<tr>
+<td id="endswith.end"><code>end</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>None</code><br />
+optional position at which to stop comparing.</td>
+</tr>
+</tbody>
+</table>
+
+## find
+
+``` rule-signature
+int string.find(sub, start=0, end=None)
+```
+
+Returns the first index where `sub` is found, or -1 if no such index exists, optionally restricting to `[start:end]`, `start` being inclusive and `end` being exclusive.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="find.sub"><code>sub</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The substring to find.</td>
+</tr>
+<tr>
+<td id="find.start"><code>start</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>0</code><br />
+Restrict to search from this position.</td>
+</tr>
+<tr>
+<td id="find.end"><code>end</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>None</code><br />
+optional position before which to restrict to search.</td>
+</tr>
+</tbody>
+</table>
+
+## format
+
+``` rule-signature
+string string.format(*args, **kwargs)
+```
+
+Perform string interpolation. Format strings contain replacement fields surrounded by curly braces `{}`. Anything that is not contained in braces is considered literal text, which is copied unchanged to the output.If you need to include a brace character in the literal text, it can be escaped by doubling: `{{` and `}}`A replacement field can be either a name, a number, or empty. Values are converted to strings using the [str](../globals/all.html#str) function.
+
+``` python
+# Access in order:
+"{} < {}".format(4, 5) == "4 < 5"
+# Access by position:
+"{1}, {0}".format(2, 1) == "1, 2"
+# Access by name:
+"x{key}x".format(key = 2) == "x2x"
+```
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="format.args"><code>args</code></td>
+<td>default is <code>()</code><br />
+List of arguments.</td>
+</tr>
+<tr>
+<td id="format.kwargs"><code>kwargs</code></td>
+<td>default is <code>{}</code><br />
+Dictionary of arguments.</td>
+</tr>
+</tbody>
+</table>
+
+## index
+
+``` rule-signature
+int string.index(sub, start=0, end=None)
+```
+
+Returns the first index where `sub` is found, or raises an error if no such index exists, optionally restricting to `[start:end]``start` being inclusive and `end` being exclusive.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="index.sub"><code>sub</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The substring to find.</td>
+</tr>
+<tr>
+<td id="index.start"><code>start</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>0</code><br />
+Restrict to search from this position.</td>
+</tr>
+<tr>
+<td id="index.end"><code>end</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>None</code><br />
+optional position before which to restrict to search.</td>
+</tr>
+</tbody>
+</table>
+
+## isalnum
+
+``` rule-signature
+bool string.isalnum()
+```
+
+Returns True if all characters in the string are alphanumeric (\[a-zA-Z0-9\]) and there is at least one character.
+
+## isalpha
+
+``` rule-signature
+bool string.isalpha()
+```
+
+Returns True if all characters in the string are alphabetic (\[a-zA-Z\]) and there is at least one character.
+
+## isdigit
+
+``` rule-signature
+bool string.isdigit()
+```
+
+Returns True if all characters in the string are digits (\[0-9\]) and there is at least one character.
+
+## islower
+
+``` rule-signature
+bool string.islower()
+```
+
+Returns True if all cased characters in the string are lowercase and there is at least one character.
+
+## isspace
+
+``` rule-signature
+bool string.isspace()
+```
+
+Returns True if all characters are white space characters and the string contains at least one character.
+
+## istitle
+
+``` rule-signature
+bool string.istitle()
+```
+
+Returns True if the string is in title case and it contains at least one character. This means that every uppercase character must follow an uncased one (e.g. whitespace) and every lowercase character must follow a cased one (e.g. uppercase or lowercase).
+
+## isupper
+
+``` rule-signature
+bool string.isupper()
+```
+
+Returns True if all cased characters in the string are uppercase and there is at least one character.
+
+## join
+
+``` rule-signature
+string string.join(elements)
+```
+
+Returns a string in which the string elements of the argument have been joined by this string as a separator. Example:  
+
+``` python
+"|".join(["a", "b", "c"]) == "a|b|c"
+```
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="join.elements"><code>elements</code></td>
+<td>iterable of <a href="../core/string.html" class="anchor">string</a>s;
+required<br />
+The objects to join.</td>
+</tr>
+</tbody>
+</table>
+
+## lower
+
+``` rule-signature
+string string.lower()
+```
+
+Returns the lower case version of this string.
+
+## lstrip
+
+``` rule-signature
+string string.lstrip(chars=None)
+```
+
+Returns a copy of the string where leading characters that appear in `chars` are removed. Note that `chars` is not a prefix: all combinations of its value are removed:
+
+``` python
+"abcba".lstrip("ba") == "cba"
+```
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="lstrip.chars"><code>chars</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>; or <code>None</code>;
+default is <code>None</code><br />
+The characters to remove, or all whitespace if None.</td>
+</tr>
+</tbody>
+</table>
+
+## partition
+
+``` rule-signature
+tuple string.partition(sep)
+```
+
+Splits the input string at the first occurrence of the separator `sep` and returns the resulting partition as a three-element tuple of the form (before, separator, after). If the input string does not contain the separator, partition returns (self, '', '').
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="partition.sep"><code>sep</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The string to split on.</td>
+</tr>
+</tbody>
+</table>
+
+## removeprefix
+
+``` rule-signature
+string string.removeprefix(prefix)
+```
+
+If the string starts with `prefix`, returns a new string with the prefix removed. Otherwise, returns the string.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="removeprefix.prefix"><code>prefix</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The prefix to remove if present.</td>
+</tr>
+</tbody>
+</table>
+
+## removesuffix
+
+``` rule-signature
+string string.removesuffix(suffix)
+```
+
+If the string ends with `suffix`, returns a new string with the suffix removed. Otherwise, returns the string.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="removesuffix.suffix"><code>suffix</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The suffix to remove if present.</td>
+</tr>
+</tbody>
+</table>
+
+## replace
+
+``` rule-signature
+string string.replace(old, new, count=-1)
+```
+
+Returns a copy of the string in which the occurrences of `old` have been replaced with `new`, optionally restricting the number of replacements to `count`.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="replace.old"><code>old</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The string to be replaced.</td>
+</tr>
+<tr>
+<td id="replace.new"><code>new</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The string to replace with.</td>
+</tr>
+<tr>
+<td id="replace.count"><code>count</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>;
+default is <code>-1</code><br />
+The maximum number of replacements. If omitted, or if the value is negative, there is no limit.</td>
+</tr>
+</tbody>
+</table>
+
+## rfind
+
+``` rule-signature
+int string.rfind(sub, start=0, end=None)
+```
+
+Returns the last index where `sub` is found, or -1 if no such index exists, optionally restricting to `[start:end]`, `start` being inclusive and `end` being exclusive.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="rfind.sub"><code>sub</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The substring to find.</td>
+</tr>
+<tr>
+<td id="rfind.start"><code>start</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>0</code><br />
+Restrict to search from this position.</td>
+</tr>
+<tr>
+<td id="rfind.end"><code>end</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>None</code><br />
+optional position before which to restrict to search.</td>
+</tr>
+</tbody>
+</table>
+
+## rindex
+
+``` rule-signature
+int string.rindex(sub, start=0, end=None)
+```
+
+Returns the last index where `sub` is found, or raises an error if no such index exists, optionally restricting to `[start:end]`, `start` being inclusive and `end` being exclusive.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="rindex.sub"><code>sub</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The substring to find.</td>
+</tr>
+<tr>
+<td id="rindex.start"><code>start</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>0</code><br />
+Restrict to search from this position.</td>
+</tr>
+<tr>
+<td id="rindex.end"><code>end</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>None</code><br />
+optional position before which to restrict to search.</td>
+</tr>
+</tbody>
+</table>
+
+## rpartition
+
+``` rule-signature
+tuple string.rpartition(sep)
+```
+
+Splits the input string at the last occurrence of the separator `sep` and returns the resulting partition as a three-element tuple of the form (before, separator, after). If the input string does not contain the separator, rpartition returns ('', '', self).
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="rpartition.sep"><code>sep</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The string to split on.</td>
+</tr>
+</tbody>
+</table>
+
+## rsplit
+
+``` rule-signature
+list string.rsplit(sep, maxsplit=unbound)
+```
+
+Returns a list of all the words in the string, using `sep` as the separator, optionally limiting the number of splits to `maxsplit`. Except for splitting from the right, this method behaves like split().
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="rsplit.sep"><code>sep</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The string to split on.</td>
+</tr>
+<tr>
+<td id="rsplit.maxsplit"><code>maxsplit</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>;
+default is <code>unbound</code><br />
+The maximum number of splits.</td>
+</tr>
+</tbody>
+</table>
+
+## rstrip
+
+``` rule-signature
+string string.rstrip(chars=None)
+```
+
+Returns a copy of the string where trailing characters that appear in `chars` are removed. Note that `chars` is not a suffix: all combinations of its value are removed:
+
+``` python
+"abcbaa".rstrip("ab") == "abc"
+```
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="rstrip.chars"><code>chars</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>; or <code>None</code>;
+default is <code>None</code><br />
+The characters to remove, or all whitespace if None.</td>
+</tr>
+</tbody>
+</table>
+
+## split
+
+``` rule-signature
+list string.split(sep, maxsplit=unbound)
+```
+
+Returns a list of all the words in the string, using `sep` as the separator, optionally limiting the number of splits to `maxsplit`.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="split.sep"><code>sep</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+The string to split on.</td>
+</tr>
+<tr>
+<td id="split.maxsplit"><code>maxsplit</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>;
+default is <code>unbound</code><br />
+The maximum number of splits.</td>
+</tr>
+</tbody>
+</table>
+
+## splitlines
+
+``` rule-signature
+sequence string.splitlines(keepends=False)
+```
+
+Splits the string at line boundaries ('\n', '\r\n', '\r') and returns the result as a new mutable list.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="splitlines.keepends"><code>keepends</code></td>
+<td><a href="../core/bool.html" class="anchor">bool</a>;
+default is <code>False</code><br />
+Whether the line breaks should be included in the resulting list.</td>
+</tr>
+</tbody>
+</table>
+
+## startswith
+
+``` rule-signature
+bool string.startswith(sub, start=0, end=None)
+```
+
+Returns True if the string starts with `sub`, otherwise False, optionally restricting to `[start:end]`, `start` being inclusive and `end` being exclusive.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="startswith.sub"><code>sub</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>; or <a href="../core/tuple.html" class="anchor">tuple</a> of <a href="../core/string.html" class="anchor">string</a>s;
+required<br />
+The prefix (or tuple of alternative prefixes) to match.</td>
+</tr>
+<tr>
+<td id="startswith.start"><code>start</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>0</code><br />
+Test beginning at this position.</td>
+</tr>
+<tr>
+<td id="startswith.end"><code>end</code></td>
+<td><a href="../core/int.html" class="anchor">int</a>; or <code>None</code>;
+default is <code>None</code><br />
+Stop comparing at this position.</td>
+</tr>
+</tbody>
+</table>
+
+## strip
+
+``` rule-signature
+string string.strip(chars=None)
+```
+
+Returns a copy of the string where leading or trailing characters that appear in `chars` are removed. Note that `chars` is neither a prefix nor a suffix: all combinations of its value are removed:
+
+``` python
+"aabcbcbaa".strip("ab") == "cbc"
+```
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="strip.chars"><code>chars</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>; or <code>None</code>;
+default is <code>None</code><br />
+The characters to remove, or all whitespace if None.</td>
+</tr>
+</tbody>
+</table>
+
+## title
+
+``` rule-signature
+string string.title()
+```
+
+Converts the input string into title case, i.e. every word starts with an uppercase letter while the remaining letters are lowercase. In this context, a word means strictly a sequence of letters. This method does not support supplementary Unicode characters.
+
+## upper
+
+``` rule-signature
+string string.upper()
+```
+
+Returns the upper case version of this string.

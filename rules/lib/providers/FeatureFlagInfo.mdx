@@ -1,0 +1,60 @@
+---
+title: 'FeatureFlagInfo'
+---
+
+# FeatureFlagInfo
+
+{% dynamic setvar source_file "src/main/java/com/google/devtools/build/lib/starlarkbuildapi/config/ConfigFeatureFlagProviderApi.java" %}
+{% include "\_buttons.html" %}
+A provider used to access information about config_feature_flag rules.
+
+## Members
+
+- [error](#error)
+- [is_valid_value](#is_valid_value)
+- [value](#value)
+
+## error
+
+``` rule-signature
+string FeatureFlagInfo.error
+```
+
+If non-None, this error was generated when trying to compute current value of flag.
+May return `None`.
+
+## is_valid_value
+
+``` rule-signature
+bool FeatureFlagInfo.is_valid_value(value)
+```
+
+The value of the flag in the configuration used by the flag rule.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="is_valid_value.value"><code>value</code></td>
+<td><a href="../core/string.html" class="anchor">string</a>;
+required<br />
+String, the value to check for validity for this flag.</td>
+</tr>
+</tbody>
+</table>
+
+## value
+
+``` rule-signature
+string FeatureFlagInfo.value
+```
+
+The current value of the flag in the flag's current configuration. None if there is an error.
+May return `None`.

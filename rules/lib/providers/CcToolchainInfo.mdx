@@ -1,0 +1,237 @@
+---
+title: 'CcToolchainInfo'
+---
+
+# CcToolchainInfo
+
+{% dynamic setvar source_file "src/main/java/com/google/devtools/build/lib/starlarkbuildapi/cpp/CcToolchainProviderApi.java" %}
+{% include "\_buttons.html" %}
+Information about the C++ compiler being used.
+
+## Members
+
+- [all_files](#all_files)
+- [ar_executable](#ar_executable)
+- [built_in_include_directories](#built_in_include_directories)
+- [compiler](#compiler)
+- [compiler_executable](#compiler_executable)
+- [cpu](#cpu)
+- [dynamic_runtime_lib](#dynamic_runtime_lib)
+- [gcov_executable](#gcov_executable)
+- [ld_executable](#ld_executable)
+- [libc](#libc)
+- [needs_pic_for_dynamic_libraries](#needs_pic_for_dynamic_libraries)
+- [nm_executable](#nm_executable)
+- [objcopy_executable](#objcopy_executable)
+- [objdump_executable](#objdump_executable)
+- [preprocessor_executable](#preprocessor_executable)
+- [static_runtime_lib](#static_runtime_lib)
+- [strip_executable](#strip_executable)
+- [sysroot](#sysroot)
+- [target_gnu_system_name](#target_gnu_system_name)
+
+## all_files
+
+``` rule-signature
+None CcToolchainInfo.all_files
+```
+
+Returns all toolchain files (so they can be passed to actions using this toolchain as inputs).
+
+## ar_executable
+
+``` rule-signature
+None CcToolchainInfo.ar_executable
+```
+
+The path to the ar binary.
+
+## built_in_include_directories
+
+``` rule-signature
+None CcToolchainInfo.built_in_include_directories
+```
+
+Returns the list of built-in directories of the compiler.
+
+## compiler
+
+``` rule-signature
+None CcToolchainInfo.compiler
+```
+
+C++ compiler.
+
+## compiler_executable
+
+``` rule-signature
+None CcToolchainInfo.compiler_executable
+```
+
+The path to the compiler binary.
+
+## cpu
+
+``` rule-signature
+None CcToolchainInfo.cpu
+```
+
+Target CPU of the C++ toolchain.
+
+## dynamic_runtime_lib
+
+``` rule-signature
+None CcToolchainInfo.dynamic_runtime_lib(*, feature_configuration)
+```
+
+Returns the files from \`dynamic_runtime_lib\` attribute (so they can be passed to actions using this toolchain as inputs). The caller can check whether the feature_configuration enables \`static_link_cpp_runtimes\` feature (if not, neither \`static_runtime_lib\` nor \`dynamic_runtime_lib\` have to be used), and use \`static_runtime_lib\` if static linking mode is active.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="dynamic_runtime_lib.feature_configuration"><code>feature_configuration</code></td>
+<td>required<br />
+Feature configuration to be queried.</td>
+</tr>
+</tbody>
+</table>
+
+## gcov_executable
+
+``` rule-signature
+None CcToolchainInfo.gcov_executable
+```
+
+The path to the gcov binary.
+
+## ld_executable
+
+``` rule-signature
+None CcToolchainInfo.ld_executable
+```
+
+The path to the ld binary.
+
+## libc
+
+``` rule-signature
+None CcToolchainInfo.libc
+```
+
+libc version string.
+
+## needs_pic_for_dynamic_libraries
+
+``` rule-signature
+None CcToolchainInfo.needs_pic_for_dynamic_libraries(*, feature_configuration)
+```
+
+Returns true if this rule's compilations should apply -fPIC, false otherwise. Determines if we should apply -fPIC for this rule's C++ compilations depending on the C++ toolchain and presence of \`--force_pic\` Bazel option.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="needs_pic_for_dynamic_libraries.feature_configuration"><code>feature_configuration</code></td>
+<td>required<br />
+Feature configuration to be queried.</td>
+</tr>
+</tbody>
+</table>
+
+## nm_executable
+
+``` rule-signature
+None CcToolchainInfo.nm_executable
+```
+
+The path to the nm binary.
+
+## objcopy_executable
+
+``` rule-signature
+None CcToolchainInfo.objcopy_executable
+```
+
+The path to the objcopy binary.
+
+## objdump_executable
+
+``` rule-signature
+None CcToolchainInfo.objdump_executable
+```
+
+The path to the objdump binary.
+
+## preprocessor_executable
+
+``` rule-signature
+None CcToolchainInfo.preprocessor_executable
+```
+
+The path to the preprocessor binary.
+
+## static_runtime_lib
+
+``` rule-signature
+None CcToolchainInfo.static_runtime_lib(*, feature_configuration)
+```
+
+Returns the files from \`static_runtime_lib\` attribute (so they can be passed to actions using this toolchain as inputs). The caller should check whether the feature_configuration enables \`static_link_cpp_runtimes\` feature (if not, neither \`static_runtime_lib\` nor \`dynamic_runtime_lib\` should be used), and use \`dynamic_runtime_lib\` if dynamic linking mode is active.
+
+### Parameters
+
+<table class="table table-bordered table-condensed table-params">
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td id="static_runtime_lib.feature_configuration"><code>feature_configuration</code></td>
+<td>required<br />
+Feature configuration to be queried.</td>
+</tr>
+</tbody>
+</table>
+
+## strip_executable
+
+``` rule-signature
+None CcToolchainInfo.strip_executable
+```
+
+The path to the strip binary.
+
+## sysroot
+
+``` rule-signature
+None CcToolchainInfo.sysroot
+```
+
+Returns the sysroot to be used. If the toolchain compiler does not support different sysroots, or the sysroot is the same as the default sysroot, then this method returns `None`.
+
+## target_gnu_system_name
+
+``` rule-signature
+None CcToolchainInfo.target_gnu_system_name
+```
+
+The GNU System Name.
