@@ -1,14 +1,14 @@
 # Bazel Docs
 
-Host Bazel’s Devsite docs on a Mintlify site for easy modification.
+Pipeline repository that renders .mdx files to Mintilify's host.
 
 ## Motivation
 
-This tool implements the improvements outlined in [Bazel Docs: Why It Might Be Time For A Refresh](https://alanmond.com/posts/bazel-documentation-improvements/).  The goal is to create a more developer friendly set of Bazel Docs.  Starting with [bazel.build/docs](https://bazel.build/docs)
+This repository implements the improvements outlined in [Bazel Docs: Why It Might Be Time For A Refresh](https://alanmond.com/posts/bazel-documentation-improvements/).  The goal is to create a more developer friendly set of Bazel Docs.  Starting with [bazel.build/docs](https://bazel.build/docs)
 
 ## Live Demo
 
-https://bazel.online
+https://preview.bazel.build
 
 ## How it works
 
