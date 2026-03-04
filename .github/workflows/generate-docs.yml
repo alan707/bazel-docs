@@ -13,8 +13,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  generate-docs:
+  detect-changes:
     if: github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    outputs:
+      upstream_changed: ${{ steps.check.outputs.upstream_changed }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - name: Check if upstream submodule pointer changed
+        id: check
+        run: |
+          if git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -q '^upstream$'; then
+            echo "upstream_changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "upstream_changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  generate-docs:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.upstream_changed == 'true'
     uses: ./.github/workflows/pull-from-bazel-build.yml
     secrets: inherit
     with:

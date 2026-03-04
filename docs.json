@@ -74,10 +74,6 @@
                     "group": "Concepts",
                     "pages": [
                       "concepts/build-ref",
-                      "concepts/labels",
-                      "concepts/build-files",
-                      "concepts/dependencies",
-                      "concepts/visibility",
                       "concepts/platforms",
                       "concepts/hermeticity"
                     ]
@@ -101,8 +97,7 @@
                     "pages": [
                       "build/style-guide",
                       "build/share-variables",
-                      "community/recommended-rules",
-                      "run/build"
+                      "community/recommended-rules"
                     ]
                   },
                   {
@@ -126,7 +121,6 @@
                       "remote/rbe",
                       "remote/rules",
                       "remote/ci",
-                      "remote/dynamic",
                       "remote/caching",
                       "remote/sandbox",
                       "remote/workspace",
@@ -153,9 +147,7 @@
                   {
                     "group": "Migrate",
                     "pages": [
-                      "migrate",
-                      "migrate/maven",
-                      "migrate/xcode"
+                      "migrate"
                     ]
                   }
                 ]
@@ -169,32 +161,24 @@
                       "reference/be/overview",
                       "reference/be/common-definitions",
                       "reference/be/make-variables",
-                      "reference/be/functions"
+                      "reference/be/platforms-and-toolchains"
                     ]
                   },
                   {
                     "group": "Command line reference",
-                    "pages": [
-                      "reference/command-line-reference"
-                    ]
+                    "pages": []
                   },
                   {
                     "group": "Query Language",
-                    "pages": [
-                      "query/language"
-                    ]
+                    "pages": []
                   },
                   {
                     "group": "Glossary",
-                    "pages": [
-                      "reference/glossary"
-                    ]
+                    "pages": []
                   },
                   {
                     "group": "Flag cheatsheet",
-                    "pages": [
-                      "reference/flag-cheatsheet"
-                    ]
+                    "pages": []
                   }
                 ]
               },
@@ -234,6 +218,10 @@
                       "rules/lib/overview",
                       "rules/lib/globals"
                     ]
+                  },
+                  {
+                    "group": "Repo rules",
+                    "pages": []
                   }
                 ]
               },
@@ -248,7 +236,6 @@
                       "contribute/patch-acceptance",
                       "contribute/maintainers-guide",
                       "contribute/codebase",
-                      "contribute/search",
                       "contribute/statemachine-guide",
                       "contribute/docs",
                       "contribute/docs-style-guide",
@@ -263,7 +250,6 @@
                       "community/sig",
                       "community/experts",
                       "community/partners",
-                      "community/users",
                       "community/recommended-rules",
                       "community/remote-execution-services"
                     ]
@@ -440,7 +426,8 @@
                       "8.4.2/reference/be/overview",
                       "8.4.2/reference/be/common-definitions",
                       "8.4.2/reference/be/make-variables",
-                      "8.4.2/reference/be/functions"
+                      "8.4.2/reference/be/functions",
+                      "8.4.2/reference/be/platforms-and-toolchains"
                     ]
                   },
                   {
@@ -452,7 +439,8 @@
                   {
                     "group": "Query Language",
                     "pages": [
-                      "8.4.2/query/language"
+                      "8.4.2/query/language",
+                      "8.4.2/query/quickstart"
                     ]
                   },
                   {
@@ -503,7 +491,20 @@
                     "group": "APIs",
                     "pages": [
                       "8.4.2/rules/lib/overview",
-                      "8.4.2/rules/lib/globals"
+                      "8.4.2/rules/lib/globals",
+                      "8.4.2/rules/lib/globals/bzl",
+                      "8.4.2/rules/lib/globals/module"
+                    ]
+                  },
+                  {
+                    "group": "Repo rules",
+                    "pages": [
+                      "8.4.2/rules/lib/repo/index",
+                      "8.4.2/rules/lib/repo/cache",
+                      "8.4.2/rules/lib/repo/git",
+                      "8.4.2/rules/lib/repo/http",
+                      "8.4.2/rules/lib/repo/local",
+                      "8.4.2/rules/lib/repo/utils"
                     ]
                   }
                 ]
@@ -711,7 +712,8 @@
                       "8.3.1/reference/be/overview",
                       "8.3.1/reference/be/common-definitions",
                       "8.3.1/reference/be/make-variables",
-                      "8.3.1/reference/be/functions"
+                      "8.3.1/reference/be/functions",
+                      "8.3.1/reference/be/platforms-and-toolchains"
                     ]
                   },
                   {
@@ -723,7 +725,8 @@
                   {
                     "group": "Query Language",
                     "pages": [
-                      "8.3.1/query/language"
+                      "8.3.1/query/language",
+                      "8.3.1/query/quickstart"
                     ]
                   },
                   {
@@ -774,7 +777,20 @@
                     "group": "APIs",
                     "pages": [
                       "8.3.1/rules/lib/overview",
-                      "8.3.1/rules/lib/globals"
+                      "8.3.1/rules/lib/globals",
+                      "8.3.1/rules/lib/globals/bzl",
+                      "8.3.1/rules/lib/globals/module"
+                    ]
+                  },
+                  {
+                    "group": "Repo rules",
+                    "pages": [
+                      "8.3.1/rules/lib/repo/index",
+                      "8.3.1/rules/lib/repo/cache",
+                      "8.3.1/rules/lib/repo/git",
+                      "8.3.1/rules/lib/repo/http",
+                      "8.3.1/rules/lib/repo/local",
+                      "8.3.1/rules/lib/repo/utils"
                     ]
                   }
                 ]
@@ -982,7 +998,8 @@
                       "8.2.1/reference/be/overview",
                       "8.2.1/reference/be/common-definitions",
                       "8.2.1/reference/be/make-variables",
-                      "8.2.1/reference/be/functions"
+                      "8.2.1/reference/be/functions",
+                      "8.2.1/reference/be/platforms-and-toolchains"
                     ]
                   },
                   {
@@ -994,7 +1011,8 @@
                   {
                     "group": "Query Language",
                     "pages": [
-                      "8.2.1/query/language"
+                      "8.2.1/query/language",
+                      "8.2.1/query/quickstart"
                     ]
                   },
                   {
@@ -1045,7 +1063,20 @@
                     "group": "APIs",
                     "pages": [
                       "8.2.1/rules/lib/overview",
-                      "8.2.1/rules/lib/globals"
+                      "8.2.1/rules/lib/globals",
+                      "8.2.1/rules/lib/globals/bzl",
+                      "8.2.1/rules/lib/globals/module"
+                    ]
+                  },
+                  {
+                    "group": "Repo rules",
+                    "pages": [
+                      "8.2.1/rules/lib/repo/index",
+                      "8.2.1/rules/lib/repo/cache",
+                      "8.2.1/rules/lib/repo/git",
+                      "8.2.1/rules/lib/repo/http",
+                      "8.2.1/rules/lib/repo/local",
+                      "8.2.1/rules/lib/repo/utils"
                     ]
                   }
                 ]
@@ -1253,7 +1284,8 @@
                       "8.1.1/reference/be/overview",
                       "8.1.1/reference/be/common-definitions",
                       "8.1.1/reference/be/make-variables",
-                      "8.1.1/reference/be/functions"
+                      "8.1.1/reference/be/functions",
+                      "8.1.1/reference/be/platforms-and-toolchains"
                     ]
                   },
                   {
@@ -1265,7 +1297,8 @@
                   {
                     "group": "Query Language",
                     "pages": [
-                      "8.1.1/query/language"
+                      "8.1.1/query/language",
+                      "8.1.1/query/quickstart"
                     ]
                   },
                   {
@@ -1316,7 +1349,20 @@
                     "group": "APIs",
                     "pages": [
                       "8.1.1/rules/lib/overview",
-                      "8.1.1/rules/lib/globals"
+                      "8.1.1/rules/lib/globals",
+                      "8.1.1/rules/lib/globals/bzl",
+                      "8.1.1/rules/lib/globals/module"
+                    ]
+                  },
+                  {
+                    "group": "Repo rules",
+                    "pages": [
+                      "8.1.1/rules/lib/repo/index",
+                      "8.1.1/rules/lib/repo/cache",
+                      "8.1.1/rules/lib/repo/git",
+                      "8.1.1/rules/lib/repo/http",
+                      "8.1.1/rules/lib/repo/local",
+                      "8.1.1/rules/lib/repo/utils"
                     ]
                   }
                 ]
@@ -1524,7 +1570,8 @@
                       "8.0.1/reference/be/overview",
                       "8.0.1/reference/be/common-definitions",
                       "8.0.1/reference/be/make-variables",
-                      "8.0.1/reference/be/functions"
+                      "8.0.1/reference/be/functions",
+                      "8.0.1/reference/be/platforms-and-toolchains"
                     ]
                   },
                   {
@@ -1536,7 +1583,8 @@
                   {
                     "group": "Query Language",
                     "pages": [
-                      "8.0.1/query/language"
+                      "8.0.1/query/language",
+                      "8.0.1/query/quickstart"
                     ]
                   },
                   {
@@ -1587,7 +1635,20 @@
                     "group": "APIs",
                     "pages": [
                       "8.0.1/rules/lib/overview",
-                      "8.0.1/rules/lib/globals"
+                      "8.0.1/rules/lib/globals",
+                      "8.0.1/rules/lib/globals/bzl",
+                      "8.0.1/rules/lib/globals/module"
+                    ]
+                  },
+                  {
+                    "group": "Repo rules",
+                    "pages": [
+                      "8.0.1/rules/lib/repo/index",
+                      "8.0.1/rules/lib/repo/cache",
+                      "8.0.1/rules/lib/repo/git",
+                      "8.0.1/rules/lib/repo/http",
+                      "8.0.1/rules/lib/repo/local",
+                      "8.0.1/rules/lib/repo/utils"
                     ]
                   }
                 ]
@@ -1795,7 +1856,8 @@
                       "7.6.2/reference/be/overview",
                       "7.6.2/reference/be/common-definitions",
                       "7.6.2/reference/be/make-variables",
-                      "7.6.2/reference/be/functions"
+                      "7.6.2/reference/be/functions",
+                      "7.6.2/reference/be/platforms-and-toolchains"
                     ]
                   },
                   {
@@ -1807,7 +1869,8 @@
                   {
                     "group": "Query Language",
                     "pages": [
-                      "7.6.2/query/language"
+                      "7.6.2/query/language",
+                      "7.6.2/query/quickstart"
                     ]
                   },
                   {
@@ -1858,7 +1921,20 @@
                     "group": "APIs",
                     "pages": [
                       "7.6.2/rules/lib/overview",
-                      "7.6.2/rules/lib/globals"
+                      "7.6.2/rules/lib/globals",
+                      "7.6.2/rules/lib/globals/bzl",
+                      "7.6.2/rules/lib/globals/module"
+                    ]
+                  },
+                  {
+                    "group": "Repo rules",
+                    "pages": [
+                      "7.6.2/rules/lib/repo/index",
+                      "7.6.2/rules/lib/repo/cache",
+                      "7.6.2/rules/lib/repo/git",
+                      "7.6.2/rules/lib/repo/http",
+                      "7.6.2/rules/lib/repo/local",
+                      "7.6.2/rules/lib/repo/utils"
                     ]
                   }
                 ]
@@ -2066,7 +2142,8 @@
                       "6.5.0/reference/be/overview",
                       "6.5.0/reference/be/common-definitions",
                       "6.5.0/reference/be/make-variables",
-                      "6.5.0/reference/be/functions"
+                      "6.5.0/reference/be/functions",
+                      "6.5.0/reference/be/platforms-and-toolchains"
                     ]
                   },
                   {
@@ -2078,7 +2155,8 @@
                   {
                     "group": "Query Language",
                     "pages": [
-                      "6.5.0/query/language"
+                      "6.5.0/query/language",
+                      "6.5.0/query/quickstart"
                     ]
                   },
                   {
@@ -2129,7 +2207,20 @@
                     "group": "APIs",
                     "pages": [
                       "6.5.0/rules/lib/overview",
-                      "6.5.0/rules/lib/globals"
+                      "6.5.0/rules/lib/globals",
+                      "6.5.0/rules/lib/globals/bzl",
+                      "6.5.0/rules/lib/globals/module"
+                    ]
+                  },
+                  {
+                    "group": "Repo rules",
+                    "pages": [
+                      "6.5.0/rules/lib/repo/index",
+                      "6.5.0/rules/lib/repo/cache",
+                      "6.5.0/rules/lib/repo/git",
+                      "6.5.0/rules/lib/repo/http",
+                      "6.5.0/rules/lib/repo/local",
+                      "6.5.0/rules/lib/repo/utils"
                     ]
                   }
                 ]
@@ -2337,7 +2428,8 @@
                       "5.4.1/reference/be/overview",
                       "5.4.1/reference/be/common-definitions",
                       "5.4.1/reference/be/make-variables",
-                      "5.4.1/reference/be/functions"
+                      "5.4.1/reference/be/functions",
+                      "5.4.1/reference/be/platforms-and-toolchains"
                     ]
                   },
                   {
@@ -2349,7 +2441,8 @@
                   {
                     "group": "Query Language",
                     "pages": [
-                      "5.4.1/query/language"
+                      "5.4.1/query/language",
+                      "5.4.1/query/quickstart"
                     ]
                   },
                   {
@@ -2400,7 +2493,20 @@
                     "group": "APIs",
                     "pages": [
                       "5.4.1/rules/lib/overview",
-                      "5.4.1/rules/lib/globals"
+                      "5.4.1/rules/lib/globals",
+                      "5.4.1/rules/lib/globals/bzl",
+                      "5.4.1/rules/lib/globals/module"
+                    ]
+                  },
+                  {
+                    "group": "Repo rules",
+                    "pages": [
+                      "5.4.1/rules/lib/repo/index",
+                      "5.4.1/rules/lib/repo/cache",
+                      "5.4.1/rules/lib/repo/git",
+                      "5.4.1/rules/lib/repo/http",
+                      "5.4.1/rules/lib/repo/local",
+                      "5.4.1/rules/lib/repo/utils"
                     ]
                   }
                 ]
