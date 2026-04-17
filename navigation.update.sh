@@ -40,9 +40,35 @@ VERSIONS=$(echo "HEAD"; echo "$FILTERED" | grep -v '^$' | sort -Vr)
 TABS_FILE="docs-tabs.json"
 NAV_DIR="navigation"
 
-# Clean and recreate the per-version directory
-rm -f "$NAV_DIR"/*.json
+# Only regenerate the HEAD nav; preserve existing versioned nav files so that
+# Dependabot submodule bumps don't overwrite manual fixes (see #346).
+rm -f "$NAV_DIR/HEAD.en.json"
 mkdir -p "$NAV_DIR"
+
+# Remove pages from a nav file whose .mdx files don't exist on disk.
+filter_missing_pages() {
+    local nav_file="$1"
+    local pages
+    pages=$(jq -r '.tabs | .. | .pages? // empty | .[]' "$nav_file")
+
+    local missing=()
+    while IFS= read -r page; do
+        [ -z "$page" ] && continue
+        if [ ! -f "${page}.mdx" ]; then
+            missing+=("$page")
+        fi
+    done <<< "$pages"
+
+    if [ ${#missing[@]} -gt 0 ]; then
+        local to_remove
+        to_remove=$(printf '%s\n' "${missing[@]}" | jq -R . | jq -sc '.')
+        local tmp
+        tmp=$(jq --argjson remove "$to_remove" \
+            'walk(if type == "array" then map(select(. as $p | ($p | type) != "string" or ($remove | index($p) | not))) else . end)' \
+            "$nav_file")
+        echo "$tmp" > "$nav_file"
+    fi
+}
 
 # Build the $ref list for navigation.json as we write each file
 REFS_JSON="["
@@ -60,15 +86,25 @@ for version in $VERSIONS; do
         jq -n --argjson tabs "$TABS_JSON" \
             '{"language":"en","tabs":$tabs}' \
             > "$NAV_DIR/HEAD.en.json"
+        filter_missing_pages "$NAV_DIR/HEAD.en.json"
         REFS_JSON="$REFS_JSON{\"version\":\"HEAD\",\"languages\":[{\"\$ref\":\"./navigation/HEAD.en.json\"}]}"
     else
         DISPLAY_VERSION=$(echo "$version" | sed 's/\.[0-9]*$//')
-        TABS_JSON=$(jq -c --arg version "$version" '
-            map(.groups = (.groups | map(.pages = (.pages | map("versions/" + $version + "/" + .)))))
-        ' "$TABS_FILE")
-        jq -n --argjson tabs "$TABS_JSON" \
-            '{"language":"en","tabs":$tabs}' \
-            > "$NAV_DIR/$DISPLAY_VERSION.en.json"
+        NAV_FILE="$NAV_DIR/$DISPLAY_VERSION.en.json"
+
+        if [ -f "$NAV_FILE" ]; then
+            echo "Keeping existing $DISPLAY_VERSION navigation"
+        else
+            echo "Creating new $DISPLAY_VERSION navigation"
+            TABS_JSON=$(jq -c --arg version "$version" '
+                map(.groups = (.groups | map(.pages = (.pages | map("versions/" + $version + "/" + .)))))
+            ' "$TABS_FILE")
+            jq -n --argjson tabs "$TABS_JSON" \
+                '{"language":"en","tabs":$tabs}' \
+                > "$NAV_FILE"
+            filter_missing_pages "$NAV_FILE"
+        fi
+
         REFS_JSON="$REFS_JSON{\"version\":\"$DISPLAY_VERSION\",\"languages\":[{\"\$ref\":\"./navigation/$DISPLAY_VERSION.en.json\"}]}"
     fi
 done
